@@ -1,13 +1,13 @@
-package com.example.replytovacansy;
+package com.example.replytovacancy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ReplyToVacansyApplication {
+public class ReplyToVacancyApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ReplyToVacansyApplication.class, args);
+		SpringApplication.run(ReplyToVacancyApplication.class, args);
 	}
 
 }

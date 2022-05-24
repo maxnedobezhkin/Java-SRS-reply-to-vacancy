@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>reply-to-vacansy</artifactId>
+	<artifactId>reply-to-vacancy</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>reply-to-vacansy</name>
-	<description>reply-to-vacansy</description>
+	<name>reply-to-vacancy</name>
+	<description>reply-to-vacancy</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -23,7 +23,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-freemarker</artifactId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

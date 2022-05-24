@@ -1,10 +1,10 @@
-package com.example.replytovacansy;
+package com.example.replytovacancy;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ReplyToVacansyApplicationTests {
+class ReplyToVacancyApplicationTests {
 
 	@Test
 	void contextLoads() {
