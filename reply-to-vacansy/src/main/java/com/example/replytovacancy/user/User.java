@@ -1,13 +1,26 @@
 package com.example.replytovacancy.user;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="users")
 public class User {
 	@Id
+	@SequenceGenerator (
+	name = "user_name",
+	sequenceName = "user_name",
+	allocationSize = 1
+	)
+	
+	@GeneratedValue(
+	strategy = GenerationType.SEQUENCE,
+	generator = "user_name"
+			)
 	private int id;
 	
 	private String name;
@@ -22,6 +35,16 @@ public class User {
 	public User(int id, String name, String surname, String contact, String letter) {
 		super();
 		this.id = id;
+		this.name = name;
+		this.surname = surname;
+		this.contact = contact;
+		this.letter = letter;
+	}
+	
+	
+	
+	public User(String name, String surname, String contact, String letter) {
+		super();
 		this.name = name;
 		this.surname = surname;
 		this.contact = contact;

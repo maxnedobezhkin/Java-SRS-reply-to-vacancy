@@ -3,21 +3,19 @@
    <head>
       <meta charset="UTF-8" />
       <title>Отклик</title>
-      <!--  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/> -->
    </head>
    <body>
       <h1>Отклик на вакансию Java Backend разработчика</h1>
-      
-      <!--  
-         In Thymeleaf the equivalent of
-         JSP's ${pageContext.request.contextPath}/edit.html
-         would be @{/edit.html}         
-         -->
          
-      <form th:action="@{/addPerson}"
-         th:object="${personForm}" method="POST">
+      <form th:action="@{/index}"
+         th:object="${userForm}" method="POST">
          <h4>Имя*</h4>
-         <input type="text" th:field="*{name}" />    
+         <input type="text" th:field="*{name}" />
+         
+         <div th:if="${errorNameMessage}" th:utext="${errorNameMessage}"
+         style="color:red;font-style:italic;">
+      	</div>
+      	    
          <br/>
          <h4>Фамилия*</h4>
          <input type="text" th:field="*{surname}" />     
