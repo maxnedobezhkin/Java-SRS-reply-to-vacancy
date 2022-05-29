@@ -8,35 +8,49 @@
       <h1>Отклик на вакансию Java Backend разработчика</h1>
          
       <form th:action="@{/index}"
-         th:object="${userForm}" method="POST">
+         th:object="${userForm}" method="POST" enctype="multipart/form-data">
          <h4>Имя*</h4>
          <input type="text" th:field="*{name}" />
-         
          <div th:if="${errorNameMessage}" th:utext="${errorNameMessage}"
          style="color:red;font-style:italic;">
       	</div>
-      	    
          <br/>
          <h4>Фамилия*</h4>
          <input type="text" th:field="*{surname}" />     
+         <div th:if="${errorSurnameMessage}" th:utext="${errorSurnameMessage}"
+         style="color:red;font-style:italic;">
+      	</div>
          <br/>
          <h4>Email или телефон*</h4>
-         <input type="text" th:field="*{contact}" />    
+         <input type="text" th:field="*{contact}" />   
+          <div th:if="${errorContactMessage}" th:utext="${errorContactMessage}"
+         style="color:red;font-style:italic;">
+      	</div>
          <br/>
+         <h4>Резюме*</h4>
+         <input type="file" th:field="*{resume}"/>
+         <div th:if="${errorResumeMessage}" th:utext="${errorResumeMessage}"
+         style="color:red;font-style:italic;">
+         </div>
          <h4>Сопроводительное письмо*</h4>
-         <input type="text" th:field="*{letter}" />    
+         <input type="text" th:field="*{letter}"/>  
+          <div th:if="${errorLetterMessage}" th:utext="${errorLetterMessage}"
+         style="color:red;font-style:italic;">
+      	</div>
          <br/>
          <br/>
          <input type="submit" value="Откликнуться" />
          <br/>
+         <br/>
+         <div th:if="${successMessage}" th:utext="${successMessage}"
+         style="color:green;font-style:italic;">
+      	</div>
+      	<br/>
+      	<div th:if="${errorReplyMessage}" th:utext="${errorReplyMessage}"
+         style="color:red;font-style:italic;">
+      	</div>
       </form>
       <br/>
       
-      <!-- Check if errorMessage is not null and not empty
-      <div th:if="${errorMessage}" th:utext="${errorMessage}"
-         style="color:red;font-style:italic;">
-         ...
-      </div>
-      !-->
    </body>
 </html>

@@ -1,12 +1,23 @@
 package com.example.replytovacancy.userForm;
 
+import java.sql.Blob;
+
+import org.springframework.web.multipart.MultipartFile;
+
 public class UserForm {
 	
 	private String name;
 	private String surname;
 	private String contact;
+	private MultipartFile resume;
 	private String letter;
 	
+	public MultipartFile getResume() {
+		return resume;
+	}
+	public void setResume(MultipartFile resume) {
+		this.resume = resume;
+	}
 	public String getName() {
 		return name;
 	}

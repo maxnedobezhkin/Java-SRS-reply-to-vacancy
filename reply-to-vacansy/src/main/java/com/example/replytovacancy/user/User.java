@@ -1,5 +1,7 @@
 package com.example.replytovacancy.user;
 
+import java.sql.Blob;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,6 +28,7 @@ public class User {
 	private String name;
 	private String surname;
 	private String contact;
+	private Blob resume; 
 	private String letter;
 	
 	public User() {
@@ -43,6 +46,23 @@ public class User {
 	
 	
 	
+	public Blob getResume() {
+		return resume;
+	}
+
+	public void setResume(Blob resume) {
+		this.resume = resume;
+	}
+
+	public User(String name, String surname, String contact, Blob resume, String letter) {
+		super();
+		this.name = name;
+		this.surname = surname;
+		this.contact = contact;
+		this.resume = resume;
+		this.letter = letter;
+	}
+
 	public User(String name, String surname, String contact, String letter) {
 		super();
 		this.name = name;
