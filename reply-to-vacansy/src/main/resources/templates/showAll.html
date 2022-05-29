@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <meta charset="UTF-8" />
+      <title>Список откликов</title>
+   </head>
+   <body>
+   
+      <div>
+	      <table border ="5">
+	      	<tr>
+	      		<th>Имя</th>
+	      		<th>Фамилия</th>
+	      		<th>Email или телефон</th>
+	      		<!--  <th>Резюме</th>-->
+	      		<th>Письмо</th>
+	      	</tr>
+	      	<tr th:each ="user : ${users}">
+	      		<td th:utext="${user.name}">...</td>
+	      		<td th:utext="${user.surname}">...</td>
+	      		<td th:utext="${user.contact}">...</td>
+	      		<!--<td th:utext="${user.resume}">...</td>-->
+	      		<td th:utext="${user.letter}">...</td>
+	      	</tr>
+	      </table>
+      </div>
+         
+      
+      
+   </body>
+</html>

@@ -3,6 +3,8 @@ package com.example.replytovacancy.userController;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
@@ -32,6 +34,8 @@ public class UserController {
 	private String errorReplyMessage;
 	private String successMessage;
 	
+	private static List<User> users = new ArrayList<User>();
+	
 	@Autowired
 	public UserController (UserService userService) {
 		this.userService = userService;
@@ -44,6 +48,16 @@ public class UserController {
 		model.addAttribute("userForm", userForm);
 
 		return "index";
+	}
+	
+	@RequestMapping(value = "/showAll", method = RequestMethod.GET)
+	public String showUsers(Model model) {
+		
+		
+		users.addAll(userService.findAll());
+		model.addAttribute("users", users);
+
+		return "showAll";
 	}
 	
 	@RequestMapping(value = { "/", "/index" }, method = RequestMethod.POST)
@@ -132,13 +146,10 @@ public class UserController {
 			userForm.setResume(null);
 			successMessage = "Отклик на вакансию Java backend разработчик успешно отправлен";
 			model.addAttribute("successMessage", successMessage);
-//			return "redirect:/index";
 		} else {
 			errorReplyMessage = "Не удалось откликнуться на вакансию";
 			model.addAttribute("errorReplyMessage", errorReplyMessage);
 		}
-		
-		
 		return "index";
 	}
 
