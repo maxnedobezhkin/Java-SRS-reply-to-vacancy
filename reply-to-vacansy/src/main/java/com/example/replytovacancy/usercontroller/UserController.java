@@ -1,4 +1,4 @@
-package com.example.replytovacancy.userController;
+package com.example.replytovacancy.usercontroller;
 
 import java.io.IOException;
 import java.sql.Blob;
@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.replytovacancy.user.User;
-import com.example.replytovacancy.userForm.UserForm;
-import com.example.replytovacancy.userService.UserService;
+import com.example.replytovacancy.userform.UserForm;
+import com.example.replytovacancy.userservice.UserService;
 
 @Controller
 public class UserController {
@@ -61,7 +61,8 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = { "/", "/index" }, method = RequestMethod.POST)
-	public String addUser(Model model, @ModelAttribute("userForm") UserForm userForm) throws SerialException, SQLException, IOException {
+	public String addUser(Model model, @ModelAttribute("userForm") UserForm userForm) 
+			throws SerialException, SQLException, IOException {
 		
 		String name = userForm.getName();
 		String surname = userForm.getSurname();
@@ -84,6 +85,8 @@ public class UserController {
 		case 0:
 			countSuccessValidation++;
 			break;
+		default:
+			break;
 		}
 		
 		switch (userService.checkName(surname)) {
@@ -97,6 +100,8 @@ public class UserController {
 			break;
 		case 0:
 			countSuccessValidation++;
+			break;
+		default:
 			break;
 		}
 		
@@ -117,6 +122,8 @@ public class UserController {
 		case 0:
 			countSuccessValidation++;
 			break;
+		default:
+			break;
 		}
 		
 		if (resumeTemp.isEmpty()) {
@@ -133,6 +140,8 @@ public class UserController {
 			break;
 		case 0:
 			countSuccessValidation++;
+			break;
+		default:
 			break;
 		}
 		

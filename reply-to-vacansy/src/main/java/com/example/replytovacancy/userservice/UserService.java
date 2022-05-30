@@ -1,4 +1,4 @@
-package com.example.replytovacancy.userService;
+package com.example.replytovacancy.userservice;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.replytovacancy.user.User;
-import com.example.replytovacancy.userRepository.UserRepository;
+import com.example.replytovacancy.userrepository.UserRepository;
 
 @Service
 public class UserService {

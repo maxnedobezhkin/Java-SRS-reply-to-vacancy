@@ -1,4 +1,4 @@
-package com.example.replytovacancy.userRepository;
+package com.example.replytovacancy.userrepository;
 
 import java.util.List;
 

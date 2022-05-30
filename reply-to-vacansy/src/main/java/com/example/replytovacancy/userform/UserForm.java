@@ -1,4 +1,4 @@
-package com.example.replytovacancy.userForm;
+package com.example.replytovacancy.userform;
 
 import java.sql.Blob;
 
