@@ -6,7 +6,7 @@
    </head>
    <body>
    
-      <div>
+      <div th:unless="${noDataMessage}">
 	      <table border ="5">
 	      	<tr>
 	      		<th>Имя</th>
@@ -24,7 +24,9 @@
 	      	</tr>
 	      </table>
       </div>
-         
+      <div th:if="${noDataMessage}" th:utext="${noDataMessage}"
+         style="color:red;font-style:italic;"> 
+      </div>
       
       
    </body>

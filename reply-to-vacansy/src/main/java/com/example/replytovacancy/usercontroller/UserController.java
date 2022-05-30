@@ -32,6 +32,7 @@ public class UserController {
 	private String errorResumeMessage;
 	private String errorLetterMessage;
 	private String errorReplyMessage;
+	private String noDataMessage;
 	private String successMessage;
 	
 	private static List<User> users = new ArrayList<User>();
@@ -55,7 +56,13 @@ public class UserController {
 		
 		
 		users.addAll(userService.findAll());
-		model.addAttribute("users", users);
+		if (users.isEmpty()) {
+			noDataMessage = "В базе нет откликов";
+			model.addAttribute("noDataMessage", noDataMessage);
+		} else {
+			model.addAttribute("users", users);
+		}
+		
 
 		return "showAll";
 	}
