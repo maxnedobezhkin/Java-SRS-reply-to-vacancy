@@ -10,7 +10,7 @@ public class UserForm {
 	private String surname;
 	private String contact;
 	private MultipartFile resume;
-	private String letter;
+	private String letter = "Добрый день! Прошу рассмотреть мое резюме на должность Backend разработчика";
 	
 	public MultipartFile getResume() {
 		return resume;

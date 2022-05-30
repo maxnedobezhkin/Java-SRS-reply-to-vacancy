@@ -82,7 +82,7 @@ public class UserController {
 		
 		switch (userService.checkName(name)) {
 		case 1:
-			errorNameMessage = "Имя не должно быть пустым";
+			errorNameMessage = "Имя не может быть пустым";
 			model.addAttribute("errorNameMessage", errorNameMessage);
 			break;
 		case 2:
@@ -98,7 +98,7 @@ public class UserController {
 		
 		switch (userService.checkName(surname)) {
 		case 1:
-			errorSurnameMessage = "Фамилия не должна быть пустой";
+			errorSurnameMessage = "Фамилия не может быть пустой";
 			model.addAttribute("errorSurnameMessage", errorSurnameMessage);
 			break;
 		case 2:
@@ -114,7 +114,7 @@ public class UserController {
 		
 		switch (userService.checkContact(contact)) {
 		case 1:
-			errorContactMessage = "Поле не должно быть пустым";
+			errorContactMessage = "Введите email или телефон";
 			model.addAttribute("errorContactMessage", errorContactMessage);
 			break;
 		case 2:
@@ -122,7 +122,7 @@ public class UserController {
 			model.addAttribute("errorContactMessage", errorContactMessage);
 			break;
 		case 3:
-			errorContactMessage = "Некорректно введенное значение";
+			errorContactMessage = "Проверьте правильность введенного email или телефона";
 			model.addAttribute("errorContactMessage", errorContactMessage);
 			break;
 		

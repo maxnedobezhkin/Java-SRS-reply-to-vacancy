@@ -32,7 +32,7 @@
          style="color:red;font-style:italic;">
          </div>
          <h4>Сопроводительное письмо*</h4>
-         <input type="text" th:field="*{letter}"/>  
+         <textarea cols = 40 rows = 20 th:field="*{letter}">Добрый день! Прошу рассмотреть мое резюме на должность Backend разработчика</textarea> 
           <div th:if="${errorLetterMessage}" th:utext="${errorLetterMessage}"
          style="color:red;font-style:italic;">
       	</div>
