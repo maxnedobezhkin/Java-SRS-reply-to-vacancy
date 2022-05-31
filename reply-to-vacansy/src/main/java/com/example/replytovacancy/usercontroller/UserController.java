@@ -76,7 +76,9 @@ public class UserController {
 	@RequestMapping(value = "/showAll", method = RequestMethod.GET)
 	public String showUsers(Model model) {
 		
-		
+		if (!users.isEmpty()) {
+			users.removeAll(users);
+		}
 		users.addAll(userService.findAll());
 		if (users.isEmpty()) {
 			noDataMessage = "В базе нет откликов";
@@ -171,6 +173,7 @@ public class UserController {
 		default:
 			break;
 		}
+
 		
 		if (countSuccessValidation == 5) {	
 			User newUser = new User(name, surname, contact, resume, letter);
