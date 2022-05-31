@@ -1,6 +1,5 @@
 package com.example.replytovacancy.userform;
 
-import java.sql.Blob;
 
 import org.springframework.web.multipart.MultipartFile;
 

@@ -5,13 +5,18 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,6 +37,7 @@ public class UserController {
 	private String errorResumeMessage;
 	private String errorLetterMessage;
 	private String errorReplyMessage;
+	private String noDataMessage;
 	private String successMessage;
 	
 	private static List<User> users = new ArrayList<User>();
@@ -45,18 +51,41 @@ public class UserController {
 	public String showIndexPage(Model model) {
 		
 		UserForm userForm = new UserForm();
+		userForm.setLetter("Добрый день! Прошу рассмотреть мое резюме на должность Backend разработчика");
 		model.addAttribute("userForm", userForm);
 
 		return "index";
 	}
 	
+	@GetMapping("/download")
+	public void downloadResume(@Param("id") int id, UserForm userForm, Model model,
+								HttpServletResponse response) throws IOException, SQLException {
+		Optional<User> temp = userService.findUserById(id);
+		if (temp != null) {
+			User user = temp.get();
+			response.setContentType("application/octet-stream");
+			String headerKey = "Content-Disposition";
+			String headerValue = "attachment; filename = "+user.getResumeName();
+			response.setHeader(headerKey, headerValue);
+			ServletOutputStream outputStream = response.getOutputStream();
+			outputStream.write(user.getResume().getBytes(1, (int) user.getResume().length()));
+			outputStream.close();
+		}
+	}
+	
 	@RequestMapping(value = "/showAll", method = RequestMethod.GET)
 	public String showUsers(Model model) {
 		
-		
+		if (!users.isEmpty()) {
+			users.removeAll(users);
+		}
 		users.addAll(userService.findAll());
-		model.addAttribute("users", users);
-
+		if (users.isEmpty()) {
+			noDataMessage = "В базе нет откликов";
+			model.addAttribute("noDataMessage", noDataMessage);
+		} else {
+			model.addAttribute("users", users);
+		}
 		return "showAll";
 	}
 	
@@ -75,11 +104,11 @@ public class UserController {
 		
 		switch (userService.checkName(name)) {
 		case 1:
-			errorNameMessage = "Имя не должно быть пустым";
+			errorNameMessage = "Имя не может быть пустым";
 			model.addAttribute("errorNameMessage", errorNameMessage);
 			break;
 		case 2:
-			errorNameMessage = "Имя содержит недопустимые символы";
+			errorNameMessage = "Имя может содержать только буквы и пробелы";
 			model.addAttribute("errorNameMessage", errorNameMessage);
 			break;
 		case 0:
@@ -91,11 +120,11 @@ public class UserController {
 		
 		switch (userService.checkName(surname)) {
 		case 1:
-			errorSurnameMessage = "Фамилия не должна быть пустой";
+			errorSurnameMessage = "Фамилия не может быть пустой";
 			model.addAttribute("errorSurnameMessage", errorSurnameMessage);
 			break;
 		case 2:
-			errorSurnameMessage = "Фамилия содержит недопустимые символы";
+			errorSurnameMessage = "Фамилия может содержать только буквы и пробелы";
 			model.addAttribute("errorSurnameMessage", errorSurnameMessage);
 			break;
 		case 0:
@@ -107,7 +136,7 @@ public class UserController {
 		
 		switch (userService.checkContact(contact)) {
 		case 1:
-			errorContactMessage = "Поле не должно быть пустым";
+			errorContactMessage = "Введите email или телефон";
 			model.addAttribute("errorContactMessage", errorContactMessage);
 			break;
 		case 2:
@@ -115,7 +144,7 @@ public class UserController {
 			model.addAttribute("errorContactMessage", errorContactMessage);
 			break;
 		case 3:
-			errorContactMessage = "Некорректно введенное значение";
+			errorContactMessage = "Проверьте правильность введенного email или телефона";
 			model.addAttribute("errorContactMessage", errorContactMessage);
 			break;
 		
@@ -144,9 +173,11 @@ public class UserController {
 		default:
 			break;
 		}
+
 		
 		if (countSuccessValidation == 5) {	
 			User newUser = new User(name, surname, contact, resume, letter);
+			newUser.setResumeName(resumeTemp.getOriginalFilename());
 			userService.addUser(newUser);
 			userForm.setName("");
 			userForm.setSurname("");

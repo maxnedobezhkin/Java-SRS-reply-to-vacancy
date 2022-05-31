@@ -9,19 +9,19 @@
       <form th:action="@{/index}"
          th:object="${userForm}" method="POST" enctype="multipart/form-data">
          <h4>Имя*</h4>
-         <input type="text" th:field="*{name}" />
+         <input type="text" th:field="*{name}" placeholder="Иван"/>
          <div th:if="${errorNameMessage}" th:utext="${errorNameMessage}"
          style="color:red;font-style:italic;">
       	</div>
          <br/>
          <h4>Фамилия*</h4>
-         <input type="text" th:field="*{surname}" />     
+         <input type="text" th:field="*{surname}" placeholder="Иванов"/>     
          <div th:if="${errorSurnameMessage}" th:utext="${errorSurnameMessage}"
          style="color:red;font-style:italic;">
       	</div>
          <br/>
          <h4>Email или телефон*</h4>
-         <input type="text" th:field="*{contact}" />   
+         <input type="text" th:field="*{contact}" placeholder="Email или телефон"/>   
           <div th:if="${errorContactMessage}" th:utext="${errorContactMessage}"
          style="color:red;font-style:italic;">
       	</div>
@@ -32,7 +32,7 @@
          style="color:red;font-style:italic;">
          </div>
          <h4>Сопроводительное письмо*</h4>
-         <input type="text" th:field="*{letter}"/>  
+         <textarea cols = 40 rows = 10 th:field="*{letter}"></textarea> 
           <div th:if="${errorLetterMessage}" th:utext="${errorLetterMessage}"
          style="color:red;font-style:italic;">
       	</div>
