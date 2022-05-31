@@ -5,13 +5,18 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -46,9 +51,26 @@ public class UserController {
 	public String showIndexPage(Model model) {
 		
 		UserForm userForm = new UserForm();
+		userForm.setLetter("Добрый день! Прошу рассмотреть мое резюме на должность Backend разработчика");
 		model.addAttribute("userForm", userForm);
 
 		return "index";
+	}
+	
+	@GetMapping("/download")
+	public void downloadResume(@Param("id") int id, UserForm userForm, Model model,
+								HttpServletResponse response) throws IOException, SQLException {
+		Optional<User> temp = userService.findUserById(id);
+		if (temp != null) {
+			User user = temp.get();
+			response.setContentType("application/octet-stream");
+			String headerKey = "Content-Disposition";
+			String headerValue = "attachment; filename = "+user.getResumeName();
+			response.setHeader(headerKey, headerValue);
+			ServletOutputStream outputStream = response.getOutputStream();
+			outputStream.write(user.getResume().getBytes(1, (int) user.getResume().length()));
+			outputStream.close();
+		}
 	}
 	
 	@RequestMapping(value = "/showAll", method = RequestMethod.GET)
@@ -62,8 +84,6 @@ public class UserController {
 		} else {
 			model.addAttribute("users", users);
 		}
-		
-
 		return "showAll";
 	}
 	
@@ -86,7 +106,7 @@ public class UserController {
 			model.addAttribute("errorNameMessage", errorNameMessage);
 			break;
 		case 2:
-			errorNameMessage = "Имя содержит недопустимые символы";
+			errorNameMessage = "Имя может содержать только буквы и пробелы";
 			model.addAttribute("errorNameMessage", errorNameMessage);
 			break;
 		case 0:
@@ -102,7 +122,7 @@ public class UserController {
 			model.addAttribute("errorSurnameMessage", errorSurnameMessage);
 			break;
 		case 2:
-			errorSurnameMessage = "Фамилия содержит недопустимые символы";
+			errorSurnameMessage = "Фамилия может содержать только буквы и пробелы";
 			model.addAttribute("errorSurnameMessage", errorSurnameMessage);
 			break;
 		case 0:
@@ -154,6 +174,7 @@ public class UserController {
 		
 		if (countSuccessValidation == 5) {	
 			User newUser = new User(name, surname, contact, resume, letter);
+			newUser.setResumeName(resumeTemp.getOriginalFilename());
 			userService.addUser(newUser);
 			userForm.setName("");
 			userForm.setSurname("");

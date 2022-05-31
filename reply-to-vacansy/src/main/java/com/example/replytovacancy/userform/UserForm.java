@@ -1,6 +1,5 @@
 package com.example.replytovacancy.userform;
 
-import java.sql.Blob;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,7 +9,7 @@ public class UserForm {
 	private String surname;
 	private String contact;
 	private MultipartFile resume;
-	private String letter = "Добрый день! Прошу рассмотреть мое резюме на должность Backend разработчика";
+	private String letter;
 	
 	public MultipartFile getResume() {
 		return resume;

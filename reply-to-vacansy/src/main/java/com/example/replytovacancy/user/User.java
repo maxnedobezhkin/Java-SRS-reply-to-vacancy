@@ -30,6 +30,7 @@ public class User {
 	private String contact;
 	private Blob resume; 
 	private String letter;
+	private String resumeName;
 	
 	public User() {
 		super();
@@ -46,6 +47,14 @@ public class User {
 	
 	
 	
+	public String getResumeName() {
+		return resumeName;
+	}
+
+	public void setResumeName(String resumeName) {
+		this.resumeName = resumeName;
+	}
+
 	public Blob getResume() {
 		return resume;
 	}
